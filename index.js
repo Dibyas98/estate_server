@@ -10,6 +10,15 @@ dbConnect(process.env.DATABASE_URL)
 
 app.use(express.json());
 app.use('/api/user',userRouter);
+app.use((err,req,res,next) =>{
+    const statuscode = err.statuscode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(statuscode).json({
+        success:false,
+        statuscode,
+        message
+    })
+})
 
 app.listen(4000,()=>{
     console.log('server is started');
