@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 function dbConnect (url){
 
     mongoose.connect(url)
@@ -10,4 +10,4 @@ function dbConnect (url){
     })
 }
 
-module.exports = dbConnect;
+export default dbConnect;

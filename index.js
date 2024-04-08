@@ -1,10 +1,11 @@
-const express = require('express');
-const dotenv = require('dotenv');
+
+import express from 'express';
+import dotenv from 'dotenv'
 dotenv.config();
-const dbConnect = require('./model/database')
+import dbConnect from './model/database.js';
+
 const app = express();
 dbConnect(process.env.DATABASE_URL)
-
 
 app.use(express.json());
 
