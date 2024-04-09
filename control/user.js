@@ -24,7 +24,6 @@ const signup = async (req, res, next) => {
 
 const signin = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
      const validUser = await userModel.findOne({ email });
     if (!validUser) return next(errorHandeler(404, "User not Found"));

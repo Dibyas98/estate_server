@@ -2,17 +2,21 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import cors from 'cors'
-dotenv.config();
 import dbConnect from './model/database.js';
 import userRouter from './route/user.js'
+import listingRouter from './route/listing.js'
+import cookieParser from 'cookie-parser';
 
+dotenv.config();
 const app = express();
 dbConnect(process.env.DATABASE_URL)
 
 
 app.use(cors())
 app.use(express.json());
+app.use(cookieParser());
 app.use('/api/user',userRouter);
+app.use('/api/listing',listingRouter)
 app.use((err,req,res,next) =>{
     const statuscode = err.statuscode || 500;
     const message = err.message || 'Internal Server Error';
