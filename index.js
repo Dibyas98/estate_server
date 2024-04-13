@@ -12,7 +12,7 @@ const app = express();
 dbConnect(process.env.DATABASE_URL)
 
 
-app.use(cors())
+// app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/user',userRouter);
