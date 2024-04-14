@@ -14,7 +14,7 @@ dbConnect(process.env.DATABASE_URL)
 
 app.use(cors(
     {
-        origin:"https://estate-dib.netlify.app/",
+        origin:"https://estate-dib.netlify.app",
         credentials: true
     }
 ))
