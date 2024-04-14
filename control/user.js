@@ -23,6 +23,7 @@ const signup = async (req, res, next) => {
 };
 
 const signin = async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
   try {
     const validUser = await userModel.findOne({ email });
