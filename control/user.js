@@ -4,6 +4,7 @@ import { errorHandeler } from "../utils/error.js";
 import jwt from 'jsonwebtoken'
 
 const signup = async (req, res, next) => {
+  console.log('here');
   try {
     const { username, email, password, mobile } = req.body;
     const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -26,7 +27,7 @@ const signin = async (req, res, next) => {
   console.log(req.body);
   const { email, password } = req.body;
   try {
-    const validUser = await userModel.findOne({ email });
+    const validUser = await userModel.findOne({ email }).populate({path:"listing"});
     if (!validUser) return next(errorHandeler(404, 'User not found!'));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandeler(401, 'Wrong credentials!'));

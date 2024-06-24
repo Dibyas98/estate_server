@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
     mobile:{
         type:Number,
         require:true
+    },
+    listing:{
+        type:[mongoose.Schema.Types.ObjectId],
+        default:[],
+        ref:"listing"
     }
     
 

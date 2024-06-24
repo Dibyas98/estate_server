@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const listingSchema = new mongoose.Schema({
     name:{
         type:String,
-        require:true
+        require:true,
     },
     description:{
         type:String,
@@ -51,6 +51,11 @@ const listingSchema = new mongoose.Schema({
     },
     userRef:{
         type:String,
+        require:true
+    },
+    userRef:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"user",
         require:true
     }
 
