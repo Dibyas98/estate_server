@@ -50,17 +50,13 @@ const listingSchema = new mongoose.Schema({
         require:true
     },
     userRef:{
-        type:String,
-        require:true
-    },
-    userRef:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user",
+        ref:"users",
         require:true
     }
 
    
 },{timestamps :true});
 
-const listingModel = mongoose.model('listing',listingSchema);
+const listingModel = mongoose.model('listings',listingSchema);
 export default listingModel

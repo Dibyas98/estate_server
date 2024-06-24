@@ -1,46 +1,71 @@
 import listingModel from "../model/listing.js";
 import { errorHandeler } from "../utils/error.js";
 import userModel from "../model/user.js";
-const createListing = async(req,res,next)=>{
+const createListing = async (req, res, next) => {
     try {
-        const data = {...req.body,userRef:req.user.id}
-        
+        const data = { ...req.body, userRef: req.user.id }
         const listing = await listingModel.create(data);
-        await userModel.findByIdAndUpdate(data.userRef,{$push : {listing:listing._id}})
+        await userModel.findByIdAndUpdate(data.userRef, { $push: { listing: listing._id } })
         res.json({
-            success : true,
+            success: true,
             listing
         })
-
-
     } catch (error) {
         console.log(error);
+        next(errorHandeler(500, error.errorResponse.errmsg))
+    }
+}
+
+const getListingById = async (req, res, next) => {
+    try {
+        // const list = await listingModel.findById(req.params.id).populate({path:"userRef"})
+        const list = await listingModel.findById(req.params.id)
+        res.json({
+            success: true,
+            list
+        })
+    } catch (error) {
+        next(errorHandeler(500, error.errorResponse.errmsg))
+    }
+}
+
+const updateListingId = async(req,res,next)=>{
+    try {
+        const list = await listingModel.findById(req.params.id);
+        if(list.userRef === req.user.id){
+            
+        }
+    } catch (error) {
         next(errorHandeler(500,error.errorResponse.errmsg))
     }
 }
 
-const getListingById = async(req,res,next) =>{
+const deleteListingId = async (req, res, next) => {
     try {
-        console.log(req.user);
-        // if (req.user.id === req.params.id){
-            const list = await listingModel.find({userRef:req.params.id}).populate({path:"userRef"})
+        const list = await listingModel.findById(req.params.id);
+        if (list.userRef === req.user.id) {
+            await listingModel.findByIdAndDelete(req.params.id)
             res.json({
-                success:true,
-                list
+                success: true,
+                message: "Listing Delete Successfully"
             })
-        // }else{
-        //     next(errorHandeler(401,'Something went wrong'))
-        // }
-        
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "No Listing Found in this Id",
+            })
+        }
+
     } catch (error) {
-        console.log(error);
-        
+        next(errorHandeler(500, error.errorResponse.errmsg))
     }
+
 }
 
 const listingControl = {
     createListing,
-    getListingById
+    getListingById,
+    deleteListingId
 }
 
 export default listingControl;

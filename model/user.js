@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     listing:{
         type:[mongoose.Schema.Types.ObjectId],
         default:[],
-        ref:"listing"
+        ref:"listings"
     }
     
 

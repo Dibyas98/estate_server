@@ -24,13 +24,13 @@ const signup = async (req, res, next) => {
 };
 
 const signin = async (req, res, next) => {
-  console.log(req.body);
   const { email, password } = req.body;
   try {
     const validUser = await userModel.findOne({ email }).populate({path:"listing"});
     if (!validUser) return next(errorHandeler(404, 'User not found!'));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandeler(401, 'Wrong credentials!'));
+    console.log(validUser);
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: pass, ...rest } = validUser._doc;
     res
