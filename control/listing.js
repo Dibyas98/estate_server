@@ -33,7 +33,12 @@ const updateListingId = async(req,res,next)=>{
     try {
         const list = await listingModel.findById(req.params.id);
         if(list.userRef === req.user.id){
-            
+            res.json({
+                success:true,
+                message:"Dummy api"
+            })
+        }else{
+            next(errorHandeler(404,'Authorization Denied'))
         }
     } catch (error) {
         next(errorHandeler(500,error.errorResponse.errmsg))
@@ -50,10 +55,7 @@ const deleteListingId = async (req, res, next) => {
                 message: "Listing Delete Successfully"
             })
         } else {
-            res.status(404).json({
-                success: false,
-                message: "No Listing Found in this Id",
-            })
+            next(errorHandeler(404,"No Listing Found in this Id"))
         }
 
     } catch (error) {
@@ -65,7 +67,8 @@ const deleteListingId = async (req, res, next) => {
 const listingControl = {
     createListing,
     getListingById,
-    deleteListingId
+    deleteListingId,
+    updateListingId
 }
 
 export default listingControl;
