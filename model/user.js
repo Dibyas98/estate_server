@@ -35,6 +35,15 @@ const userSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         default: [],
         ref: "listings"
+    },
+    cart:{
+        type:[mongoose.Schema.Types.ObjectId],
+        default:[],
+        ref: "listings"
+    },
+    order:{
+        type:[mongoose.Schema.Types.ObjectId],
+        default:[]
     }
 }, { timestamps: true });
 

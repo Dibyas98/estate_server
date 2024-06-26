@@ -27,7 +27,7 @@ const signup = async (req, res, next) => {
 const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const validUser = await userModel.findOne({ email }).populate({path:"listing"});
+    const validUser = await userModel.findOne({ email }).populate('listing').populate('bookmark').populate('cart').populate('order');
     if (!validUser) return next(errorHandeler(404, 'User not found!'));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandeler(401, 'Wrong credentials!'));
