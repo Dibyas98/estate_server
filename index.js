@@ -16,7 +16,7 @@ dbConnect(process.env.DATABASE_URL)
 
 app.use(cors(
     {
-        origin:'http://localhost:5173/',
+        origin:'https://estate-web-9ult.vercel.app/',
         credentials: true
     }
 ))
