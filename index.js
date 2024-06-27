@@ -14,12 +14,7 @@ const app = express();
 dbConnect(process.env.DATABASE_URL)
 
 
-app.use(cors(
-    {
-        origin:'https://estate-web-9ult.vercel.app/',
-        credentials: true
-    }
-))
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/user',userRouter);
