@@ -27,16 +27,20 @@ const signup = async (req, res, next) => {
 const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const validUser = await userModel.findOne({ email }).populate('listing').populate('bookmark').populate('cart').populate('order');
+    let validUser = await userModel.findOne({ email }).populate('listing').populate('bookmark').populate('cart').populate('order');
     if (!validUser) return next(errorHandeler(404, 'User not found!'));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandeler(401, 'Wrong credentials!'));
-    const token = jwt.sign({ id: validUser._id ,role:validUser.role}, process.env.JWT_SECRET);
+    const token =jwt.sign({ id: validUser._id ,role:validUser.role}, process.env.JWT_SECRET);
+    console.log(validUser);
     const { password: pass, ...rest } = validUser._doc;
     res
-      .cookie('access_token', token, { httpOnly: true })
+      .cookie('access_token', token)
       .status(200)
-      .json(rest);
+      .json({
+        token:token,
+        rest
+      });
   } catch (error) {
     next(error);
   }

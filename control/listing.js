@@ -12,7 +12,7 @@ const createListing = async (req, res, next) => {
         })
     } catch (error) {
         console.log(error);
-        next(errorHandeler(500, error.errorResponse.errmsg))
+        // next(errorHandeler(500, error.errorResponse.errmsg))
     }
 }
 
