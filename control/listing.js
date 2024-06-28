@@ -4,6 +4,7 @@ import userModel from "../model/user.js";
 const createListing = async (req, res, next) => {
     try {
         const data = { ...req.body, userRef: req.user.id }
+        console.log(data);
         const listing = await listingModel.create(data);
         await userModel.findByIdAndUpdate(data.userRef, { $push: { listing: listing._id } })
         res.json({
@@ -64,11 +65,26 @@ const deleteListingId = async (req, res, next) => {
 
 }
 
+const getListingAll= async(req,res,next)=>{
+    console.log(req.user.id);
+    try {
+        const list = await listingModel.find({ userRef: req.user.id });
+        res.json({
+            success:true,
+            list
+        })
+    } catch (error) {
+        console.log(error);
+        next(errorHandeler(500, error))
+    }
+}
+
 const listingControl = {
     createListing,
     getListingById,
     deleteListingId,
-    updateListingId
+    updateListingId,
+    getListingAll
 }
 
 export default listingControl;
